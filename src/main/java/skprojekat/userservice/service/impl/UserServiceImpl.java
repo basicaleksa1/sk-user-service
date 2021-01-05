@@ -8,12 +8,16 @@ import org.springframework.stereotype.Service;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import skprojekat.userservice.domain.Rank;
+import skprojekat.userservice.domain.Role;
 import skprojekat.userservice.domain.User;
 import skprojekat.userservice.dto.TokenRequestDto;
 import skprojekat.userservice.dto.TokenResponseDto;
 import skprojekat.userservice.dto.UserCreateDto;
 import skprojekat.userservice.dto.UserDto;
 import skprojekat.userservice.map.UserMapper;
+import skprojekat.userservice.repository.RankRepository;
+import skprojekat.userservice.repository.RoleRepository;
 import skprojekat.userservice.repository.UserRepository;
 import skprojekat.userservice.security.service.TokenService;
 import skprojekat.userservice.service.UserService;
@@ -22,12 +26,17 @@ import skprojekat.userservice.service.UserService;
 public class UserServiceImpl implements UserService{
 
 	private UserRepository userRepo;
+	private RankRepository rankRepo;
+	private RoleRepository roleRepo;
 	private UserMapper userMapper;
 	private TokenService tokenService;
 	
-	public UserServiceImpl(UserRepository userRepo, UserMapper userMapper) {
+	public UserServiceImpl(UserRepository userRepo,
+			UserMapper userMapper, RankRepository rankRepo, RoleRepository roleRepo) {
 		this.userRepo = userRepo;
 		this.userMapper = userMapper;
+		this.rankRepo = rankRepo;
+		this.roleRepo = roleRepo;
 	}
 
 	@Override
@@ -54,7 +63,11 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public UserDto add(UserCreateDto userCreateDto) {
 		User user = userMapper.userCreateDtoToUser(userCreateDto);
-        userRepo.save(user);
+		Rank rank = rankRepo.findByType("Bronze").orElseThrow();
+		Role role = roleRepo.findByName("ROLE_USER").orElseThrow();
+		user.setRank(rank);
+		user.setRole(role);
+		userRepo.save(user);
         return userMapper.userToUserDto(user);
 	}
 

@@ -1,7 +1,5 @@
 package skprojekat.userservice.domain;
 
-import java.util.List;
-
 import javax.persistence.*;
 
 @Entity
@@ -20,6 +18,8 @@ public class User {
 	private String password;
 	@Column(length = 20, unique = true, nullable = false)
 	private int passport;
+	@Column(length = 10, nullable = false)
+	private int miles;
     @ManyToOne(optional = false)
 	private Role role;
     @ManyToOne(optional = true)
@@ -80,6 +80,12 @@ public class User {
 	}
 	public void setRank(Rank rank) {
 		this.rank = rank;
+	}
+	public int getMiles() {
+		return miles;
+	}
+	public void setMiles(int miles) {
+		this.miles = miles;
 	}
 
 }

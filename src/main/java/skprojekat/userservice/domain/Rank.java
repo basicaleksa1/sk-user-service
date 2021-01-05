@@ -37,7 +37,6 @@ public class Rank {
 
 	public void setMiles(int miles) {
 		this.miles = miles;
-		checkType();
 	}
 
 	public int getPopust() {
@@ -46,18 +45,5 @@ public class Rank {
 
 	public void setPopust(int popust) {
 		this.popust = popust;
-	}
-
-	private void checkType() {
-		if(this.getMiles() < 1000) {
-			this.setType("Bronza");
-			this.setPopust(0);
-		}else if(this.getMiles() < 10000) {
-			this.setType("Srebro");
-			this.setPopust(10);
-		}else {
-			this.setType("Zlato");
-			this.setPopust(20);
-		}
 	}
 }

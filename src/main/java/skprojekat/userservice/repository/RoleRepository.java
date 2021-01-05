@@ -11,5 +11,5 @@ import skprojekat.userservice.domain.Role;
 @Repository
 public interface RoleRepository extends JpaRepository<Role, Long> {
 
-    Optional<Role> findRoleByName(String name);
+    Optional<Role> findByName(String name);
 }
