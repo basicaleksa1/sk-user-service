@@ -34,6 +34,10 @@ public class TestDataRunner implements CommandLineRunner {
         admin.setEmail("admin@gmail.com");
         admin.setPassword("admin");
         admin.setRole(roleAdmin);
+        admin.setFirst_name("admin");
+        admin.setPassport(12312313);
+        admin.setLast_name("adminic");
+
         userRepository.save(admin);
     }
 }

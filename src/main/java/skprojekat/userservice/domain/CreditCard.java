@@ -4,7 +4,9 @@ import javax.persistence.*;
 
 @Entity
 public class CreditCard {
-	
+
+	@Id
+	private Integer id;
 	@Column(length = 40, nullable = false)
 	private String full_name;
 	@Column(length = 15, nullable = false)
