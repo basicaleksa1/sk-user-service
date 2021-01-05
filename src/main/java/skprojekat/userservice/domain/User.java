@@ -22,8 +22,10 @@ public class User {
 	private int passport;
     @ManyToOne(optional = false)
 	private Role role;
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = true)
     private List<CreditCard> credit_cards;
+	@ManyToOne(optional = false)
+	private Rank rank;
 	
 	public int getId() {
 		return id;
@@ -72,6 +74,12 @@ public class User {
 	}
 	public void setCredit_cards(List<CreditCard> credit_cards) {
 		this.credit_cards = credit_cards;
+	}
+	public Rank getRank() {
+		return rank;
+	}
+	public void setRank(Rank rank) {
+		this.rank = rank;
 	}
 
 }
