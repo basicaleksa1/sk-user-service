@@ -1,5 +1,7 @@
 package skprojekat.userservice.domain;
 
+import java.util.List;
+
 import javax.persistence.*;
 
 @Entity
@@ -23,7 +25,7 @@ public class User {
     @ManyToOne(optional = false)
 	private Role role;
     @ManyToOne(optional = true)
-    private CreditCard credit_cards;
+    private List<CreditCard> credit_cards;
 	@ManyToOne(optional = true)
 	private Rank rank;
 	
@@ -63,7 +65,7 @@ public class User {
 	public void setPassport(int passport) {
 		this.passport = passport;
 	}
-	public CreditCard getCredit_cards() {
+	public List<CreditCard> getCredit_cards() {
 		return credit_cards;
 	}
 	public Role getRole() {
@@ -72,7 +74,7 @@ public class User {
 	public void setRole(Role role) {
 		this.role = role;
 	}
-	public void setCredit_cards(CreditCard credit_cards) {
+	public void setCredit_cards(List<CreditCard> credit_cards) {
 		this.credit_cards = credit_cards;
 	}
 	public Rank getRank() {

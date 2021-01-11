@@ -4,11 +4,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.ApiOperation;
+import skprojekat.userservice.dto.CardDto;
 import skprojekat.userservice.dto.TokenRequestDto;
 import skprojekat.userservice.dto.TokenResponseDto;
 import skprojekat.userservice.dto.UserCreateDto;
@@ -39,6 +41,11 @@ public class UserController {
 	 public ResponseEntity<UserDto> saveUser(@RequestBody UserCreateDto userCreateDto) {
 	     return new ResponseEntity<>(serviceUser.add(userCreateDto), HttpStatus.CREATED);
 	 }
+	 
+	/* @PutMapping
+	 public ResponseEntity<UserDto> addCard(@RequestBody CardDto cardDto){
+		 return new ResponseEntity<>(serviceUser.)
+	 }*/
 	 
 	 @ApiOperation(value = "Login")
 	 @PostMapping("/login")

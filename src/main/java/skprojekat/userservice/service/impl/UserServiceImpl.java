@@ -11,11 +11,13 @@ import io.jsonwebtoken.Jwts;
 import skprojekat.userservice.domain.Rank;
 import skprojekat.userservice.domain.Role;
 import skprojekat.userservice.domain.User;
+import skprojekat.userservice.dto.CardCreateDto;
 import skprojekat.userservice.dto.TokenRequestDto;
 import skprojekat.userservice.dto.TokenResponseDto;
 import skprojekat.userservice.dto.UserCreateDto;
 import skprojekat.userservice.dto.UserDto;
 import skprojekat.userservice.map.UserMapper;
+import skprojekat.userservice.repository.CardRepository;
 import skprojekat.userservice.repository.RankRepository;
 import skprojekat.userservice.repository.RoleRepository;
 import skprojekat.userservice.repository.UserRepository;
@@ -28,15 +30,17 @@ public class UserServiceImpl implements UserService{
 	private UserRepository userRepo;
 	private RankRepository rankRepo;
 	private RoleRepository roleRepo;
+	private CardRepository cardRepo;
 	private UserMapper userMapper;
 	private TokenService tokenService;
 	
 	public UserServiceImpl(UserRepository userRepo,
-			UserMapper userMapper, RankRepository rankRepo, RoleRepository roleRepo) {
+		   UserMapper userMapper, RankRepository rankRepo, RoleRepository roleRepo, CardRepository cardRepo) {
 		this.userRepo = userRepo;
 		this.userMapper = userMapper;
 		this.rankRepo = rankRepo;
 		this.roleRepo = roleRepo;
+		this.cardRepo = cardRepo;
 	}
 
 	@Override
@@ -59,7 +63,7 @@ public class UserServiceImpl implements UserService{
 	public Optional<User> findById(Integer id) {
 		return userRepo.findById(id);
 	}
-
+	
 	@Override
 	public UserDto add(UserCreateDto userCreateDto) {
 		User user = userMapper.userCreateDtoToUser(userCreateDto);
@@ -83,6 +87,12 @@ public class UserServiceImpl implements UserService{
         claims.put("role", user.getRole().getName());
         //Generate token
         return new TokenResponseDto(tokenService.generate(claims));
+	}
+
+	@Override
+	public UserDto addCard(CardCreateDto cardCreateDto) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	
