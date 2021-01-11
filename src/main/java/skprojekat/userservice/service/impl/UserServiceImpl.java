@@ -4,10 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import skprojekat.userservice.domain.CreditCard;
 import skprojekat.userservice.domain.Rank;
 import skprojekat.userservice.domain.Role;
 import skprojekat.userservice.domain.User;
@@ -16,6 +19,7 @@ import skprojekat.userservice.dto.TokenRequestDto;
 import skprojekat.userservice.dto.TokenResponseDto;
 import skprojekat.userservice.dto.UserCreateDto;
 import skprojekat.userservice.dto.UserDto;
+import skprojekat.userservice.map.CardMapper;
 import skprojekat.userservice.map.UserMapper;
 import skprojekat.userservice.repository.CardRepository;
 import skprojekat.userservice.repository.RankRepository;
@@ -31,16 +35,20 @@ public class UserServiceImpl implements UserService{
 	private RankRepository rankRepo;
 	private RoleRepository roleRepo;
 	private CardRepository cardRepo;
+	private CardMapper cardMapper;
 	private UserMapper userMapper;
 	private TokenService tokenService;
 	
-	public UserServiceImpl(UserRepository userRepo,
-		   UserMapper userMapper, RankRepository rankRepo, RoleRepository roleRepo, CardRepository cardRepo) {
+	public UserServiceImpl(UserRepository userRepo, UserMapper userMapper, RankRepository rankRepo, 
+			               RoleRepository roleRepo, CardRepository cardRepo, CardMapper cardMapper,
+			               TokenService tokenService) {
 		this.userRepo = userRepo;
 		this.userMapper = userMapper;
 		this.rankRepo = rankRepo;
 		this.roleRepo = roleRepo;
 		this.cardRepo = cardRepo;
+		this.cardMapper = cardMapper;
+		this.tokenService = tokenService;
 	}
 
 	@Override
@@ -83,6 +91,7 @@ public class UserServiceImpl implements UserService{
                 .orElseThrow();
         //Create token payload
         Claims claims = Jwts.claims();
+        System.out.println(claims + "EEEEEEEEEEEEEEEEEEEEEEEEEEEEee");
         claims.put("id", user.getId());
         claims.put("role", user.getRole().getName());
         //Generate token
@@ -90,9 +99,17 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public UserDto addCard(CardCreateDto cardCreateDto) {
-		// TODO Auto-generated method stub
-		return null;
+	public UserDto addCard(String authorization, CardCreateDto cardCreateDto) {
+		Claims claims = tokenService.parseToken(authorization.split(" ")[1]);
+        int id = claims.get("id", Integer.class);
+        
+        User curr_user = userRepo.findById(id).orElseThrow();
+        CreditCard card = cardMapper.cardCreateDtoToCard(cardCreateDto);
+        card.setUser(curr_user);
+        cardRepo.save(card);
+        curr_user.addCard(card);
+
+		return userMapper.userToUserDto(curr_user);
 	}
 	
 	

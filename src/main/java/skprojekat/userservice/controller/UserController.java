@@ -6,11 +6,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.ApiOperation;
-import skprojekat.userservice.dto.CardDto;
+import skprojekat.userservice.dto.CardCreateDto;
 import skprojekat.userservice.dto.TokenRequestDto;
 import skprojekat.userservice.dto.TokenResponseDto;
 import skprojekat.userservice.dto.UserCreateDto;
@@ -42,10 +43,11 @@ public class UserController {
 	     return new ResponseEntity<>(serviceUser.add(userCreateDto), HttpStatus.CREATED);
 	 }
 	 
-	/* @PutMapping
-	 public ResponseEntity<UserDto> addCard(@RequestBody CardDto cardDto){
-		 return new ResponseEntity<>(serviceUser.)
-	 }*/
+	 @ApiOperation(value = "Add card")
+	 @PutMapping
+	 public ResponseEntity<UserDto> addCard(@RequestHeader("Authorization") String authorization, @RequestBody CardCreateDto cardCreateDto){
+	     return new ResponseEntity<>(serviceUser.addCard(authorization, cardCreateDto), HttpStatus.CREATED);
+	 }
 	 
 	 @ApiOperation(value = "Login")
 	 @PostMapping("/login")

@@ -21,10 +21,10 @@ public interface UserService {
 	
 	UserDto add(UserCreateDto userCreateDto);
 	
-	UserDto addCard(CardCreateDto cardCreateDto);
-	
 	void deleteById(Integer id);
 	
     TokenResponseDto login(TokenRequestDto tokenRequestDto);
+
+	UserDto addCard(String authorization, CardCreateDto cardCreateDto);
 
 }

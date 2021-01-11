@@ -6,6 +6,7 @@ import javax.persistence.*;
 public class CreditCard {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	@Column(length = 40, nullable = false)
 	private String full_name;
@@ -13,6 +14,8 @@ public class CreditCard {
 	private int card_num;
 	@Column(length = 3, nullable = false)
 	private String card_code;
+	@ManyToOne()
+	private User user;
 	
 	public String getFull_name() {
 		return full_name;
@@ -31,6 +34,18 @@ public class CreditCard {
 	}
 	public void setCard_code(String card_code) {
 		this.card_code = card_code;
+	}
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
 	}
 	
 }

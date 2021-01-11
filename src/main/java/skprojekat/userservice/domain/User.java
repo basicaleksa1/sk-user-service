@@ -24,7 +24,7 @@ public class User {
 	private int miles;
     @ManyToOne(optional = false)
 	private Role role;
-    @ManyToOne(optional = true)
+    @OneToMany(mappedBy = "user")
     private List<CreditCard> credit_cards;
 	@ManyToOne(optional = true)
 	private Rank rank;
@@ -88,6 +88,9 @@ public class User {
 	}
 	public void setMiles(int miles) {
 		this.miles = miles;
+	}
+	public void addCard(CreditCard card) {
+		this.credit_cards.add(card);
 	}
 
 }

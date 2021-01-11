@@ -25,5 +25,4 @@ public class CardCreateDto {
 		this.card_code = card_code;
 	}
 	
-	
 }
