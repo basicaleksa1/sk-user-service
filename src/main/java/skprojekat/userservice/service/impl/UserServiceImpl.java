@@ -26,6 +26,7 @@ import skprojekat.userservice.repository.RankRepository;
 import skprojekat.userservice.repository.RoleRepository;
 import skprojekat.userservice.repository.UserRepository;
 import skprojekat.userservice.security.service.TokenService;
+import skprojekat.userservice.service.EmailService;
 import skprojekat.userservice.service.UserService;
 
 @Service
@@ -38,10 +39,11 @@ public class UserServiceImpl implements UserService{
 	private CardMapper cardMapper;
 	private UserMapper userMapper;
 	private TokenService tokenService;
+	private EmailService emailService;
 	
 	public UserServiceImpl(UserRepository userRepo, UserMapper userMapper, RankRepository rankRepo, 
 			               RoleRepository roleRepo, CardRepository cardRepo, CardMapper cardMapper,
-			               TokenService tokenService) {
+			               TokenService tokenService, EmailService emailService) {
 		this.userRepo = userRepo;
 		this.userMapper = userMapper;
 		this.rankRepo = rankRepo;
@@ -49,6 +51,7 @@ public class UserServiceImpl implements UserService{
 		this.cardRepo = cardRepo;
 		this.cardMapper = cardMapper;
 		this.tokenService = tokenService;
+		this.emailService = emailService;
 	}
 
 	@Override
@@ -81,6 +84,9 @@ public class UserServiceImpl implements UserService{
 		user.setRank(rank);
 		user.setRole(role);
 		userRepo.save(user);
+		System.out.println(user.getEmail());
+		emailService.sendSimpleMessage(user.getEmail(), "Registracija", "Uspesno ste registrovani!");
+		
         return userMapper.userToUserDto(user);
 	}
 
