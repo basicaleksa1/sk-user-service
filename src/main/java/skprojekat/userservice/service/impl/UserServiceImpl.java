@@ -121,12 +121,14 @@ public class UserServiceImpl implements UserService{
 		User curr_user = userRepo.findById(id).orElseThrow();
 		System.out.println(curr_user.getEmail());
 		curr_user.setMiles(curr_user.getMiles() + miles);
-		List<Rank> ranks = rankRepo.findAll();
+		Rank bronze = rankRepo.findByType("Bronze").orElseThrow();
+		Rank silver = rankRepo.findByType("Silver").orElseThrow();
+		Rank gold = rankRepo.findByType("Gold").orElseThrow();
 		if(curr_user.getMiles() > 1000){
-			curr_user.setRank(ranks.get(2));
+			curr_user.setRank(silver);
 		}
 		else if(curr_user.getMiles() > 10000){
-			curr_user.setRank(ranks.get(3));
+			curr_user.setRank(gold);
 		}
 		userRepo.save(curr_user);
 		return userMapper.userToUserDto(curr_user);
