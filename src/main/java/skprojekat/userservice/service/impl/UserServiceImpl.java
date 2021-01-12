@@ -112,6 +112,25 @@ public class UserServiceImpl implements UserService{
 
 		return userMapper.userToUserDto(curr_user);
 	}
-	
-	
+
+	@Override
+	public UserDto updateMiles(String authorization, int miles) {
+		Claims claims = tokenService.parseToken(authorization.split(" ")[1]);
+		int id = claims.get("id", Integer.class);
+
+		User curr_user = userRepo.findById(id).orElseThrow();
+		System.out.println(curr_user.getEmail());
+		curr_user.setMiles(curr_user.getMiles() + miles);
+		List<Rank> ranks = rankRepo.findAll();
+		if(curr_user.getMiles() > 1000){
+			curr_user.setRank(ranks.get(2));
+		}
+		else if(curr_user.getMiles() > 10000){
+			curr_user.setRank(ranks.get(3));
+		}
+		userRepo.save(curr_user);
+		return userMapper.userToUserDto(curr_user);
+	}
+
+
 }

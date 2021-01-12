@@ -27,4 +27,6 @@ public interface UserService {
 
 	UserDto addCard(String authorization, CardCreateDto cardCreateDto);
 
+	UserDto updateMiles(String authorization, int miles);
+
 }

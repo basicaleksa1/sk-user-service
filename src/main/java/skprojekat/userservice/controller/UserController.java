@@ -39,7 +39,7 @@ public class UserController {
 	 }
 
 	 @ApiOperation(value = "Add card")
-	 @PutMapping
+	 @PutMapping("/addCard")
 	 public ResponseEntity<UserDto> addCard(@RequestHeader("Authorization") String authorization, @RequestBody CardCreateDto cardCreateDto){
 		 return new ResponseEntity<>(serviceUser.addCard(authorization, cardCreateDto), HttpStatus.CREATED);
 	 }
@@ -55,4 +55,8 @@ public class UserController {
 		 return new ResponseEntity<UserDto>(serviceUser.findById(id), HttpStatus.OK);
 	 }
 
+	 @PutMapping("/updateMiles")
+	 public ResponseEntity<UserDto> updateMiles(@RequestHeader("Authorization") String authorization, @RequestBody Integer miles){
+		 return new ResponseEntity<>(serviceUser.updateMiles(authorization, miles), HttpStatus.OK);
+	 }
 }

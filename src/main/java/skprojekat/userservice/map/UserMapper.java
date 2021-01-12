@@ -26,6 +26,11 @@ public class UserMapper {
 		userDto.setId(user.getId());
 		userDto.setFirst_name(user.getFirst_name());
 		userDto.setLast_name(user.getLast_name());
+		userDto.setEmail(user.getEmail());
+		userDto.setPassport(user.getPassport());
+		userDto.setPassword(user.getPassword());
+		userDto.setMiles(user.getMiles());
+		userDto.setRank(user.getRank());
 		
 		return userDto;
 	}
