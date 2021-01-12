@@ -17,7 +17,7 @@ public interface UserService {
 	
 	List<UserDto> findAll();
 	
-	Optional<User> findById(Integer id);
+	UserDto findById(Integer id);
 	
 	UserDto add(UserCreateDto userCreateDto);
 	

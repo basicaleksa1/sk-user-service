@@ -68,8 +68,9 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public Optional<User> findById(Integer id) {
-		return userRepo.findById(id);
+	public UserDto findById(Integer id) {
+		User user = userRepo.findById(id).orElseThrow();
+		return userMapper.userToUserDto(user);
 	}
 	
 	@Override
