@@ -140,5 +140,19 @@ public class UserServiceImpl implements UserService{
 		return userMapper.userToUserDto(curr_user);
 	}
 
+	@Override
+	public UserDto editUser(String authorization, UserCreateDto userCreateDto) {
+		Claims claims = tokenService.parseToken(authorization.split(" ")[1]);
+		int id = claims.get("id", Integer.class);
+
+		User curr_user = userRepo.findById(id).orElseThrow();
+		curr_user.setFirst_name(userCreateDto.getFirst_name());
+		curr_user.setLast_name(userCreateDto.getLast_name());
+		curr_user.setEmail(userCreateDto.getEmail());
+		curr_user.setPassport(userCreateDto.getPassport());
+		curr_user.setPassword(userCreateDto.getPassword());
+		return userMapper.userToUserDto(curr_user);
+	}
+
 
 }

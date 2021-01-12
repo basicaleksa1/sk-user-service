@@ -54,7 +54,12 @@ public class UserController {
 	 public ResponseEntity<UserDto> findById(@RequestHeader("Authorization") String authorization, @PathVariable("id") Integer id){
 		 return new ResponseEntity<UserDto>(serviceUser.findById(id), HttpStatus.OK);
 	 }
-
+	 
+	 @PutMapping("/editUser")
+	 public ResponseEntity<UserDto> addCard(@RequestHeader("Authorization") String authorization, @RequestBody UserCreateDto userCreateDto){
+		 return new ResponseEntity<>(serviceUser.editUser(authorization, userCreateDto), HttpStatus.OK);
+	 }
+	 
 	 @PutMapping("/updateMiles")
 	 public ResponseEntity<UserDto> updateMiles(@RequestHeader("Authorization") String authorization, @RequestBody Integer miles){
 		 return new ResponseEntity<>(serviceUser.updateMiles(authorization, miles), HttpStatus.OK);

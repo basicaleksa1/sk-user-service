@@ -1,11 +1,9 @@
 package skprojekat.userservice.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import skprojekat.userservice.domain.User;
 import skprojekat.userservice.dto.CardCreateDto;
 import skprojekat.userservice.dto.TokenRequestDto;
 import skprojekat.userservice.dto.TokenResponseDto;
@@ -28,5 +26,7 @@ public interface UserService {
 	UserDto addCard(String authorization, CardCreateDto cardCreateDto);
 
 	UserDto updateMiles(String authorization, int miles);
+
+	UserDto editUser(String authorization, UserCreateDto userCreateDto);
 
 }
